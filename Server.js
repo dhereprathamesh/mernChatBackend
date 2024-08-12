@@ -22,7 +22,7 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["https://chat-app-vb0p.onrender.com", "http://localhost:3000"],
   methods: "GET,POST,PUT,DELETE",
   credentials: true, // Allow credentials (cookies, headers)
 };
@@ -52,7 +52,7 @@ const PORT = process.env.PORT || 5000;
 const io = new socketIo(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["https://chat-app-vb0p.onrender.com", "http://localhost:3000"],
   },
 });
 
