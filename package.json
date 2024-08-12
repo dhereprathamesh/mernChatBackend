@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+     "build-log": "node build-log.js",
+    "debug": "DEBUG=* node server.js"
   },
   "author": "",
   "license": "ISC",
