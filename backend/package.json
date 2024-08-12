@@ -2,13 +2,13 @@
   "name": "talk-a-tive",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "backend/server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "build-log": "node build-log.js",
-    "debug": "DEBUG=* node server.js"
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+      "build-log": "node build-log.js",
+    "debug": "DEBUG=* node backend/server.js"
   },
   "author": "",
   "license": "ISC",
