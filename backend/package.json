@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-     "build-log": "node build-log.js",
+    "build-log": "node build-log.js",
     "debug": "DEBUG=* node server.js"
   },
   "author": "",
@@ -30,5 +30,6 @@
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3"
-  }
+  },
+  "keywords": []
 }

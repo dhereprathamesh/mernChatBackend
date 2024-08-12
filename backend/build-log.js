@@ -3,13 +3,13 @@ import fs from "fs";
 import path from "path";
 
 // Path to the log file
-const logFilePath = path.join(__dirname, "build-log.txt");
+const logFilePath = path.join(process.cwd(), "build-log.txt");
 
 // Function to run a command and log the output
 const runCommand = (command) => {
   console.log(`Running command: ${command}`);
 
-  const logStream = fs.createWriteStream(logFilePath, { flags: "w" }); // 'w' to overwrite and start fresh
+  const logStream = fs.createWriteStream(logFilePath, { flags: "a" });
 
   const process = exec(command);
 
