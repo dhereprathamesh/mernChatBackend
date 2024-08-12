@@ -1,13 +1,14 @@
-const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel");
-const generateToken = require("../config/generateToken");
+import asyncHandler from "express-async-handler";
+import User from "../models/userModel.js";
+import generateToken from "../config/generateToken.js";
 
+// Register a new user
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
 
   if (!name || !email || !password) {
     res.status(400);
-    throw new Error("Please Enter all the Feilds");
+    throw new Error("Please enter all the fields");
   }
 
   const userExists = await User.findOne({ email });
@@ -33,10 +34,11 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Failed to Create the User");
+    throw new Error("Failed to create the user");
   }
 });
 
+// Authenticate user
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -50,9 +52,13 @@ const authUser = asyncHandler(async (req, res) => {
       pic: user.pic,
       token: generateToken(user._id),
     });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password");
   }
 });
 
+// Get all users
 const allUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.search
     ? {
@@ -63,12 +69,13 @@ const allUsers = asyncHandler(async (req, res) => {
       }
     : {};
   const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
-  res.send(users);
+  res.json(users);
 });
 
+// User authentication check
 const userAuth = (req, res) => {
   // If the protect middleware has passed, we know the user is authenticated
   res.status(200).json({ ok: true });
 };
 
-module.exports = { registerUser, authUser, allUsers, userAuth };
+export { registerUser, authUser, allUsers, userAuth };

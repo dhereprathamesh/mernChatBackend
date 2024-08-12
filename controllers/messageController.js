@@ -1,8 +1,9 @@
-const asyncHandler = require("express-async-handler");
-const Message = require("../models/messageModel");
-const Chat = require("../models/chatModel");
-const User = require("../models/userModel");
+import asyncHandler from "express-async-handler";
+import Message from "../models/messageModel.js";
+import Chat from "../models/chatModel.js";
+import User from "../models/userModel.js";
 
+// Send a message
 const sendMessage = asyncHandler(async (req, res) => {
   const { content, chatId } = req.body;
 
@@ -11,14 +12,14 @@ const sendMessage = asyncHandler(async (req, res) => {
     return res.sendStatus(400);
   }
 
-  var newMessage = {
+  const newMessage = {
     sender: req.user._id,
-    content: content,
+    content,
     chat: chatId,
   };
 
   try {
-    var message = await Message.create(newMessage);
+    let message = await Message.create(newMessage);
 
     message = await message.populate("sender", "name pic");
     message = await message.populate("chat");
@@ -27,7 +28,7 @@ const sendMessage = asyncHandler(async (req, res) => {
       select: "name pic email",
     });
 
-    await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
+    await Chat.findByIdAndUpdate(chatId, { latestMessage: message });
 
     res.json(message);
   } catch (error) {
@@ -36,6 +37,7 @@ const sendMessage = asyncHandler(async (req, res) => {
   }
 });
 
+// Get all messages for a chat
 const allMessages = asyncHandler(async (req, res) => {
   try {
     const messages = await Message.find({ chat: req.params.chatId })
@@ -48,4 +50,4 @@ const allMessages = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { sendMessage, allMessages };
+export { sendMessage, allMessages };

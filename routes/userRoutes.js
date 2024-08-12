@@ -1,11 +1,11 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   registerUser,
   authUser,
   allUsers,
   userAuth,
-} = require("../controllers/userControllers");
-const { protect } = require("../middlewares/authMiddleware");
+} from "../controllers/userControllers.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.post("/login", authUser);
 // Protecting the user-auth route with the protect middleware
 router.get("/user-auth", protect, userAuth);
 
-module.exports = router;
+export default router;

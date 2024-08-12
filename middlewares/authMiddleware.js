@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/userModel.js");
-const asyncHandler = require("express-async-handler");
+import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
+import asyncHandler from "express-async-handler";
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -12,7 +12,7 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
 
-      //decodes token id
+      // Decode token ID
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       req.user = await User.findById(decoded.id).select("-password");
@@ -30,4 +30,4 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { protect };
+export { protect };
